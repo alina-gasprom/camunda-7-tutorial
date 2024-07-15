@@ -1,0 +1,14 @@
+camunda.bpm:
+  admin-user:
+    id: demo
+    password: 1234
+    firstName: Demo
+  filter:
+    create: All tasks
+
+server:
+  port: 7777
+
+spring:
+  application:
+    name: camunda-7-tutorial
