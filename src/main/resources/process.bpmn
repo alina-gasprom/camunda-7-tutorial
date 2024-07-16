@@ -1,37 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1do7t6r" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
   <bpmn:process id="myProcess" isExecutable="true" camunda:historyTimeToLive="1">
-    <bpmn:startEvent id="StartEvent_1">
+    <bpmn:startEvent id="start" camunda:asyncBefore="true">
       <bpmn:outgoing>Flow_0t07ev6</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_0t07ev6" sourceRef="StartEvent_1" targetRef="Activity_02kcmu8" />
-    <bpmn:endEvent id="Event_19o3u2r">
+    <bpmn:sequenceFlow id="Flow_0t07ev6" sourceRef="start" targetRef="set_variable_parametr1" />
+    <bpmn:endEvent id="end" camunda:asyncBefore="true">
       <bpmn:incoming>Flow_0ckx8g4</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0ckx8g4" sourceRef="Activity_02kcmu8" targetRef="Event_19o3u2r" />
-    <bpmn:userTask id="Activity_02kcmu8" name="Ручная задача">
+    <bpmn:sequenceFlow id="Flow_0ckx8g4" sourceRef="internal_service_task" targetRef="end" />
+    <bpmn:task id="set_variable_parametr1" name="устанавливаем переменную параметр1" camunda:asyncBefore="true">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:outputParameter name="параметр1">запад восток</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
       <bpmn:incoming>Flow_0t07ev6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0apcgse</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0apcgse" sourceRef="set_variable_parametr1" targetRef="internal_service_task" />
+    <bpmn:serviceTask id="internal_service_task" name="Внутренняя задача" camunda:asyncBefore="true" camunda:delegateExpression="#{internalServiceTask}">
+      <bpmn:incoming>Flow_0apcgse</bpmn:incoming>
       <bpmn:outgoing>Flow_0ckx8g4</bpmn:outgoing>
-    </bpmn:userTask>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="myProcess">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start">
         <dc:Bounds x="179" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_19o3u2r_di" bpmnElement="Event_19o3u2r">
-        <dc:Bounds x="432" y="99" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_19o3u2r_di" bpmnElement="end">
+        <dc:Bounds x="542" y="99" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1sx3gwi_di" bpmnElement="Activity_02kcmu8">
-        <dc:Bounds x="270" y="77" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0q5q8cr_di" bpmnElement="set_variable_parametr1">
+        <dc:Bounds x="250" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06u6mbz_di" bpmnElement="internal_service_task">
+        <dc:Bounds x="390" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0t07ev6_di" bpmnElement="Flow_0t07ev6">
         <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
+        <di:waypoint x="250" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ckx8g4_di" bpmnElement="Flow_0ckx8g4">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="432" y="117" />
+        <di:waypoint x="490" y="117" />
+        <di:waypoint x="542" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0apcgse_di" bpmnElement="Flow_0apcgse">
+        <di:waypoint x="350" y="117" />
+        <di:waypoint x="390" y="117" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
